@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 //@config
 import { config } from "../config/index.js";
 
-export const verifyToken = async (token) => {
+export const convertToken = async (token) => {
     try {
         const { SECRET } = config.environment
         const verified = jwt.verify(token, SECRET);

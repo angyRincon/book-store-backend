@@ -16,7 +16,6 @@ import { commentResolvers } from "./comment/resolvers/index.js";
 import { categoryResolvers } from "./category/resolvers/index.js";
 import { userResolvers } from "./user/resolvers/index.js";
 
-
 const rootTypeDefs = gql`
     type Query {
         _: String
@@ -34,7 +33,7 @@ export const typeDefs = [
     authorTypeDefs,
     bookTypeDefs,
     commentTypeDefs,
-    categoryTypeDefs
+    categoryTypeDefs,
 ];
 
 

@@ -1,16 +1,38 @@
 //@models
 import Book from "../../../models/Book.js";
 
+//@config
+import { isAdmin, isLoggedIn } from "../../../config/permissions/index.js";
+
+//@utils
+import { combineResolvers } from "graphql-resolvers";
+
 export const bookResolvers = {
     Query: {
-        books: async () => await Book.find({}).populate('categories comments author')
+        books: async () => {
+            try {
+                const book = await Book.find({}).populate('categories comments author')
+                if (book) return { data: book }
+            } catch (e) {
+                return { status: 404, message: e.message }
+            }
+        }
+
     },
 
     Mutation: {
-        createBook: async (_, { book }) => {
-            const newBook = new Book(book);
-            await newBook.save();
-            return newBook.populate('categories comments author');
-        }
+        createBook: combineResolvers(isLoggedIn, isAdmin, async (_, { book }, context) => {
+            try {
+                const newBook = new Book(book);
+                await newBook.save();
+                const result = newBook.populate('categories comments author');
+                return { data: result, status: 200 }
+            } catch (error) {
+                return {
+                    data: null,
+                    message: error.message
+                }
+            }
+        })
     }
 }

@@ -10,7 +10,8 @@ import { connectDataBase } from "./database.js";
 
 //@middlewares
 import { createRoles } from "./middlewares/createRoles.js";
-import { verifyToken } from "./utils/verifyToken.js";
+import { convertToken } from "./utils/convertToken.js";
+
 
 const server = new ApolloServer({
     typeDefs,
@@ -25,7 +26,7 @@ const startServer = async () => {
         server,
         {
             listen: { port: 4000 },
-            context: async ({ req }) => await verifyToken(req.headers.bearer)
+            context: async ({ req }) => await convertToken(req.headers.bearer)
         }
     )
     console.log('Listening on', url)

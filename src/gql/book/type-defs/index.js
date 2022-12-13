@@ -1,16 +1,17 @@
 import { gql } from "apollo-server";
 
 export const bookTypeDefs = gql`
+    
     type BookType {
-        id: ID!
-        title: String!
-        description: String!
-        author: AuthorType!
+        id: ID
+        title: String
+        description: String
+        author: AuthorType
         comments: [CommentType]
         rating: Float
-        categories: [CategoryType!]!
+        categories: [CategoryType!]
     }
-    
+
     input BookInput {
         title: String!
         description: String!
@@ -20,11 +21,18 @@ export const bookTypeDefs = gql`
         categories: [ID]
     }
 
+    type BookResponse {
+        data: BookType
+        status: Int!
+        message: String
+    }
+
     type Query {
-        books: [BookType!]!
+        books: BookResponse!
     }
 
     type Mutation {
-        createBook(book: BookInput): BookType!
+        createBook(book: BookInput): BookResponse!
+        updateBook(book: BookInput): BookResponse!
     }
 `
