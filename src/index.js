@@ -19,6 +19,7 @@ const server = new ApolloServer({
     introspection: true
 })
 
+createRoles();
 
 const startServer = async () => {
     const { url } = await startStandaloneServer(
@@ -32,8 +33,6 @@ const startServer = async () => {
 }
 
 Promise.all([
-    createRoles(),
     startServer(),
     connectDataBase()
 ]).then(() => console.log('Successfully connected'))
-
