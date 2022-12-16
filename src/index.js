@@ -19,7 +19,7 @@ const server = new ApolloServer({
     introspection: true
 })
 
-createRoles();
+// createRoles();
 
 const startServer = async () => {
     const { url } = await startStandaloneServer(
